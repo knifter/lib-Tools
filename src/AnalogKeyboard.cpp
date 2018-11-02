@@ -4,7 +4,7 @@
 
 #define CNT_MATCH   3
 
-Button_t read_buttons_once()
+Button_t AnalogKeyboard::read_buttons_once()
 {
     Button_t key = read_buttons();
 
@@ -21,11 +21,11 @@ Button_t read_buttons_once()
         return key;
 
     return BTN_NONE;
-}
+};
 
-Button_t read_buttons()
+Button_t AnalogKeyboard::read_buttons()
 {
-    int adc = analogRead(0);      // read the value from the sensor
+    int adc = analogRead(_pin);      // read the value from the sensor
     if (adc > BTN_NONE)      return BTN_NONE;
     if (adc > BTN_SELECT)    return BTN_SELECT;
     if (adc > BTN_LEFT)      return BTN_LEFT;
