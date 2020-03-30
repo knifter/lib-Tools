@@ -47,11 +47,11 @@ Button_t AnalogKeyboard::read_buttons_long()
     Serial.println("!first");
 
     // Detect long
-    bool longpress = false;
+    // bool longpress = false;
     if(millis() > key_start + LONG_PRESS_MS)
     {
         Serial.println("long");
-        key = (Button_t) key | 0x01; // Convert short press to _LONG
+        key = (Button_t) (key | 0x01); // Convert short press to _LONG
     };
 
     // Detect release or short -> long
