@@ -1,7 +1,10 @@
-# KeyTools
+# Common c++ Tools Library for my projects
 
-*AnalogKeyboard*
-Class to support the few-key keyboard on an analog pin from the LCD shields
+*KeyTools*
+Function to debounce and detect short/long/simultaneous presses
 
-*KeyScan*
-Function to debounce and detect short/long/simultanous presses
+*NonCopyable*
+Disables copy- and assignemnt constructors when inherited from
+
+*log.h*
+Log formatter helpers
