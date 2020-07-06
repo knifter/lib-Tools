@@ -1,6 +1,7 @@
 #ifndef __UTIL_H
 #define __UTIL_H
 
-void printMAC();
+void printBaseMAC();
+void printWiFiMAC();
 
 #endif // __UTIL_H
