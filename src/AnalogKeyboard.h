@@ -22,7 +22,7 @@ typedef enum {
 class AnalogKeyboard
 {
 public:
-    AnalogKeyboard(const uint8_t analog_pin = A0) : _pin(analog_pin) {};
+    AnalogKeyboard(const uint8_t analog_pin) : _pin(analog_pin) {};
         
     Button_t read_buttons_long();
     Button_t read_buttons_once();
