@@ -1,9 +1,8 @@
 #include "tools-network.h"
 
-#include <Arduino.h>
-#include <WiFi.h>
-
 #include <tools-log.h>
+
+#include "esp_system.h"
 
 /*
 The following MAC addresses are derived from the BASE MAC in the EFUSE BLK0.
