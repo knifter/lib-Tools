@@ -74,10 +74,10 @@ void test_keys()
   pressed |= KEY_C;
 
   // feed through key2event
-  keyevent_t k = key2event(pressed);
+  uint32_t k = key2event(pressed);
   
   // Check results
-  switch(e)
+  switch(k)
   {
     case KEY_A_SHORT:           print("A short-pressed"); break;
     case KEY_A_LONG:            print("A long press"); break;
