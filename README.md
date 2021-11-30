@@ -112,3 +112,36 @@ And check for raw keys:
     
   };
 ```
+
+And another example of how events can be used (for some rudimentary acceleration):
+```
+  // Scan keys
+  ...
+  
+  uint32_t k = key2event(pressed);
+
+  static int val = 0;
+  static time_t start;
+  switch(k)
+  {
+    case KEY_A_SHORT: val -= 1; break;
+    case KEY_A_LONG:  
+      start = millis();
+    case KEY_A_LONG_REPEAT:
+      val -= 5*(1 + (millis() - start) / 500);
+      break;
+    case KEY_B_LONG: val = 0; break;
+    case KEY_C_SHORT: val += 1; break;
+    case KEY_C_LONG:
+      start = millis();
+    case KEY_C_LONG_REPEAT:
+      val += 5*(1 + (millis() - start) / 500);
+      break;
+  };
+  static int val_prv = val;
+  if(val != val_prv)
+  {
+      DBG("val = val + %d = %d", val - val_prv, val);
+      val_prv = val;
+  };
+```
