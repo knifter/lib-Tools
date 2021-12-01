@@ -10,6 +10,26 @@
 #define KEYTOOL_MODIFIER_MASK	(KEYTOOL_SHORT | KEYTOOL_LONG | KEYTOOL_LONG_REPEAT | KEYTOOL_RELEASED)
 #define KEYTOOL_KEYS_MASK       (~KEYTOOL_MODIFIER_MASK)    
 
+/*
+    Debug code:
+	switch(e)
+	{
+		case KEY_A:                 Serial.println("KEY_A"); break;
+	    case KEY_B:                 Serial.println("KEY_B"); break;
+		case KEY_AB:                Serial.println("KEY_AB"); break;
+		case KEY_A_SHORT:           Serial.println("KEY_A_SHORT"); break;
+		case KEY_A_LONG:            Serial.println("KEY_A_LONG"); break;
+		case KEY_A_LONG_REPEAT:     Serial.println("KEY_A_LONG_REPEAT"); break;
+		case KEY_B_SHORT:           Serial.println("KEY_B_SHORT"); break;
+		case KEY_B_LONG:            Serial.println("KEY_B_LONG"); break;
+		case KEY_B_LONG_REPEAT:     Serial.println("KEY_B_LONG_REPEAT"); break;
+		case KEY_AB_SHORT:          Serial.println("KEY_AB_SHORT"); break;
+		case KEY_AB_LONG:           Serial.println("KEY_AB_LONG"); break;
+		case KEY_AB_LONG_REPEAT:    Serial.println("KEY_AB_LONG_REPEAT"); break;
+		case KEY_RELEASED:          Serial.println("KEY_RELEASED"); break;
+	};
+*/
+
 uint32_t key2event(uint32_t pressed)
 {
 	static uint32_t last = KEYTOOL_NONE;
@@ -57,7 +77,11 @@ uint32_t key2event(uint32_t pressed)
         // keys are added, modifiers removed
 		last = (last | pressed) & KEYTOOL_KEYS_MASK; 
 		start = now;
+#ifdef KEYTOOL_FALLTHROUGH
+        return pressed;
+#else
         return KEYTOOL_NONE;
+#endif
 	};
 
 	// Long press detect
@@ -84,7 +108,11 @@ uint32_t key2event(uint32_t pressed)
     };
 
     // nothing, just chillin' until LONG or LONG_REPEAT
-	return KEYTOOL_NONE;
+#ifdef KEYTOOL_FALLTHROUGH
+    return pressed;
+#else
+    return KEYTOOL_NONE;
+#endif
 };
 
 #if KEYTOOL_HOLDOFF_MS > 0
