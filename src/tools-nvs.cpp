@@ -3,6 +3,7 @@
 // #include <Arduino.h>
 #include <nvs.h>
 
+#include "config.h"
 #include "tools-log.h"
 
 typedef struct
