@@ -4,10 +4,10 @@
 
 #include <Arduino.h> // millis(), 
 
-#include "tools-log.h"
+// #include "tools-log.h"
 
 // higher bits are taken for events
-#define KEYTOOL_MODIFIER_MASK	(KEYTOOL_SHORT | KEYTOOL_LONG | KEYTOOL_LONG_REPEAT | KEYTOOL_RELEASED)
+#define KEYTOOL_MODIFIER_MASK	(KEYTOOL_SHORT | KEYTOOL_LONG | KEYTOOL_LONG_REPEAT | KEYTOOL_LONG_RELEASED)
 #define KEYTOOL_KEYS_MASK       (~KEYTOOL_MODIFIER_MASK)    
 
 /*
@@ -53,7 +53,7 @@ uint32_t key2event(uint32_t pressed)
             // DBG("released after long");
 			last = KEYTOOL_NONE;
 			start = now;
-            return KEYTOOL_RELEASED;
+            return KEYTOOL_LONG_RELEASED;
 		};
 
 		// Did we release a key?
