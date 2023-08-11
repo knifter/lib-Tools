@@ -4,17 +4,31 @@
 
 #include <Arduino.h> // millis(), 
 
-// #include "tools-log.h"
+#include "tools-log.h"
 
 // higher bits are taken for events
-#define KEYTOOL_MODIFIER_MASK	(KEYTOOL_SHORT | KEYTOOL_LONG | KEYTOOL_LONG_REPEAT | KEYTOOL_LONG_RELEASED)
-#define KEYTOOL_KEYS_MASK       (~KEYTOOL_MODIFIER_MASK)    
+/* Events: 
+Events being given are, in this order:
+ KEY_NONE (No keys are pressed)
+ KEY_A (if fallthrough is defined)
+ KEY_A_SHORT (A is continuously pressed for SHORT_MS duration: debounce A)
+ then if A is released after SHORT_MS (and before LONG_MS):
+    KEY_A_SHORT | KEY_A_RELEASED (indicating A has been shortly pressed, debounced and released. Define KEY_A_PRESSED=SHORT|RELEASE as a shorthand)
+ or if A was held after SHORT_MS:
+    KEY_A_LONG (A is continuously pressed for LONG_MS duration)
+    KEY_A_LONG_REPEAR (A keeps being pressed, re-emitted every LONG_REPEAT_MS)
+    KEY_A_LONG_RELEASED (A has been released)
+ KEY_RELEASED (Always emitted once after all keys are released, with key mask = 0x00)
+ 
+ This is done also any combination of A/B/C as KEY_AC_x for example.
+*/
 
 /* example code
 typedef enum : uint32_t
 {
 	KEY_NONE = 0x00,
     KEY_RELEASED = KEYTOOL_RELEASED,
+    KEY_PRESSED = KEYTOOL_SHORT | KEYTOOL_RELEASED,
 
     // key defs
 	KEY_A = 0x01,
@@ -31,6 +45,9 @@ typedef enum : uint32_t
     KEY_A_SHORT = KEY_A | KEYTOOL_SHORT,
     KEY_B_SHORT = KEY_B | KEYTOOL_SHORT,
     KEY_C_SHORT = KEY_C | KEYTOOL_SHORT,
+    KEY_A_PRESSED = KEY_A | KEYTOOL_PRESSED,
+    KEY_B_PRESSED = KEY_A | KEYTOOL_PRESSED,
+    KEY_C_PRESSED = KEY_A | KEYTOOL_PRESSED,
     KEY_A_LONG = KEY_A | KEYTOOL_LONG,
     KEY_B_LONG = KEY_B | KEYTOOL_LONG,
     KEY_C_LONG = KEY_C | KEYTOOL_LONG,
@@ -45,6 +62,7 @@ typedef enum : uint32_t
 	KEY_AB_SHORT = KEY_AB | KEYTOOL_SHORT,
 	KEY_AC_SHORT = KEY_AC | KEYTOOL_SHORT,
 	KEY_BC_SHORT = KEY_BC | KEYTOOL_SHORT,
+    KEY_AB_PRESSED = KEY_AB | KEYTOOL_PRESSED,
 	KEY_AB_LONG = KEY_AB | KEYTOOL_LONG,
 	KEY_AC_LONG = KEY_AC | KEYTOOL_LONG,
 	KEY_BC_LONG = KEY_BC | KEYTOOL_LONG,
@@ -53,7 +71,7 @@ typedef enum : uint32_t
 	KEY_BC_LONG_REPEAT = KEY_BC | KEYTOOL_LONG_REPEAT,
 
     // combinations of 3
-	KEY_ABC_SHORT = KEY_ABC | KEYTOOL_SHORT,
+	KEY_ABC_PRESSED = KEY_ABC | KEYTOOL_PRESSED,
 	KEY_ABC_LONG = KEY_ABC | KEYTOOL_LONG,
 	KEY_ABC_LONG_REPEAT = KEY_ABC | KEYTOOL_LONG_REPEAT,
 } demo_event_t;
@@ -144,7 +162,7 @@ uint32_t key2event(uint32_t pressed)
 		uint32_t ret = KEYTOOL_NONE;
 		// Short press detect, only if long enough will we return it
 		if((now - start) > KEYTOOL_SHORT_MS)
-			ret = last | KEYTOOL_SHORT;
+			ret = last | KEYTOOL_RELEASED; // = SHORT|RELEASED
 
 		// reset detector
 		last = KEYTOOL_RELEASED;
@@ -152,7 +170,7 @@ uint32_t key2event(uint32_t pressed)
 		return ret;
 	};
 
-	// so we have a (or more) key pressed from now on
+	// so we have one or more keys pressed from now on
 
 	// If pressed keys are added, we restart counting. But ignore modifier bits for that
     if(last_keys != (pressed | last_keys))
@@ -166,6 +184,16 @@ uint32_t key2event(uint32_t pressed)
         return KEYTOOL_NONE;
 #endif
 	};
+
+    // Short press detect, emit right away
+    if(!(last & KEYTOOL_EVENT_MASK)) // && (now - start > KEYTOOL_SHORT))
+    {
+        if(now - start > KEYTOOL_SHORT_MS)
+        {
+            last = (pressed | KEYTOOL_SHORT);
+            return last;    
+        };
+    };
 
 	// Long press detect
     if(last & KEYTOOL_LONG)
@@ -183,8 +211,8 @@ uint32_t key2event(uint32_t pressed)
         // LONG not set: waiting for LONG
         if(now - start > KEYTOOL_LONG_MS)
         {
-            // Mark as LONG and return this
-            last |= KEYTOOL_LONG;
+            // Mark as LONG and return this (removing SHORT bit)
+            last = last_keys |  KEYTOOL_LONG;
             start = now;
             return last;
         };
