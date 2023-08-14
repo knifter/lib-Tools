@@ -146,28 +146,28 @@ uint32_t key2event(uint32_t pressed)
 	if(pressed == KEYTOOL_NONE)
 	{
         // if no keys were registered, this is not a release
-        if(!last)
+        if(last == KEYTOOL_NONE)
             return KEYTOOL_NONE;
 
-		// last one was long press which is now released, we already sent out an event so skip sending a short
+        // LONG_RELEASED:
+        // Button(s) was released after LONG, don't emit SHORT_RELEASED but only LONG_RELEASED, then RELEASED
 		if(last & KEYTOOL_LONG)
 		{
             // DBG("released after long");
 			last = KEYTOOL_RELEASED;
-			start = now;
             return last_keys | KEYTOOL_LONG_RELEASED;
 		};
 
-		// Did we release a key?
-		uint32_t ret = KEYTOOL_NONE;
-		// Short press detect, only if long enough will we return it
-		if((now - start) > KEYTOOL_SHORT_MS)
-			ret = last | KEYTOOL_RELEASED; // = SHORT|RELEASED
+        // SHORT_RELEASED
+        // Button was released after only SHORT time, emit SHORT_RELEASED for this combination, then RELEASED
+        if(last & KEYTOOL_SHORT)
+        {
+            last = KEYTOOL_RELEASED;
+            return last_keys | KEYTOOL_SHORT_RELEASED;
+        };
 
-		// reset detector
-		last = KEYTOOL_RELEASED;
-		start = now;
-		return ret;
+		// All presses were shorter than SHORT: reset and ignore
+		return last = KEYTOOL_NONE;
 	};
 
 	// so we have one or more keys pressed from now on
@@ -191,7 +191,7 @@ uint32_t key2event(uint32_t pressed)
         if(now - start > KEYTOOL_SHORT_MS)
         {
             last = (pressed | KEYTOOL_SHORT);
-            return last;    
+            return last;
         };
     };
 
