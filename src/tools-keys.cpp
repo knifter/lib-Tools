@@ -11,7 +11,7 @@
 Events being given are, in this order:
  KEY_NONE (No keys are pressed)
  KEY_A (if fallthrough is defined)
- KEY_A_SHORT (A is continuously pressed for SHORT_MS duration: debounce A)
+ KEY_A_SHORT (A is continuously pressed for SHORT_MS duration: debounced A)
  then if A is released after SHORT_MS (and before LONG_MS):
     KEY_A_SHORT | KEY_A_RELEASED (indicating A has been shortly pressed, debounced and released. Define KEY_A_PRESSED=SHORT|RELEASE as a shorthand)
  or if A was held after SHORT_MS:
@@ -45,9 +45,9 @@ typedef enum : uint32_t
     KEY_A_SHORT = KEY_A | KEYTOOL_SHORT,
     KEY_B_SHORT = KEY_B | KEYTOOL_SHORT,
     KEY_C_SHORT = KEY_C | KEYTOOL_SHORT,
-    KEY_A_PRESSED = KEY_A | KEYTOOL_PRESSED,
-    KEY_B_PRESSED = KEY_A | KEYTOOL_PRESSED,
-    KEY_C_PRESSED = KEY_A | KEYTOOL_PRESSED,
+    KEY_A_PRESSED = KEY_A | KEYTOOL_SHORT_RELEASED,
+    KEY_B_PRESSED = KEY_A | KEYTOOL_SHORT_RELEASED,
+    KEY_C_PRESSED = KEY_A | KEYTOOL_SHORT_RELEASED,
     KEY_A_LONG = KEY_A | KEYTOOL_LONG,
     KEY_B_LONG = KEY_B | KEYTOOL_LONG,
     KEY_C_LONG = KEY_C | KEYTOOL_LONG,
@@ -62,7 +62,7 @@ typedef enum : uint32_t
 	KEY_AB_SHORT = KEY_AB | KEYTOOL_SHORT,
 	KEY_AC_SHORT = KEY_AC | KEYTOOL_SHORT,
 	KEY_BC_SHORT = KEY_BC | KEYTOOL_SHORT,
-    KEY_AB_PRESSED = KEY_AB | KEYTOOL_PRESSED,
+    KEY_AB_PRESSED = KEY_AB | KEYTOOL_SHORT_RELEASED,
 	KEY_AB_LONG = KEY_AB | KEYTOOL_LONG,
 	KEY_AC_LONG = KEY_AC | KEYTOOL_LONG,
 	KEY_BC_LONG = KEY_BC | KEYTOOL_LONG,
@@ -71,7 +71,7 @@ typedef enum : uint32_t
 	KEY_BC_LONG_REPEAT = KEY_BC | KEYTOOL_LONG_REPEAT,
 
     // combinations of 3
-	KEY_ABC_PRESSED = KEY_ABC | KEYTOOL_PRESSED,
+	KEY_ABC_PRESSED = KEY_ABC | KEYTOOL_SHORT_RELEASED,
 	KEY_ABC_LONG = KEY_ABC | KEYTOOL_LONG,
 	KEY_ABC_LONG_REPEAT = KEY_ABC | KEYTOOL_LONG_REPEAT,
 } demo_event_t;
