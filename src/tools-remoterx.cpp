@@ -153,7 +153,7 @@ void RemoteRx::debugPacket(const rmt_item32_t* item, const size_t length)
 {
 	time_t now = millis();
 	static time_t last;
-	printf("+%d ms: %d bit packet: ", now - last, length);
+	printf("+%ld ms: %d bit packet: ", now - last, length);
 	last = now;
 
 	int short_min = 0x7FFFFFFF;
