@@ -33,11 +33,13 @@
     #endif
 
     #ifdef ARDUINO
-        #define DEBUG_DEVICE        Serial
-        #define DBG(msg, ...)      DEBUG_DEVICE.printf("%s.%s: " msg "\n", __FILE__, __FUNCTION__, ##__VA_ARGS__)
-        #define INFO(msg, ...)	   DEBUG_DEVICE.printf("%s: " msg "\n", __FUNCTION__, ##__VA_ARGS__)
-        #define WARNING(msg, ...)  DEBUG_DEVICE.printf("WARN :" __FILE__ ".%s(" __LINESTR__ "): " msg "\n", __FUNCTION__, ##__VA_ARGS__)
-        #define ERROR(msg, ...)    DEBUG_DEVICE.printf("ERROR:" __FILE__ ".%s(" __LINESTR__ "): " msg "\n", __FUNCTION__, ##__VA_ARGS__)
+        #ifndef TOOLS_DEBUG_DEVICE
+            #define TOOLS_DEBUG_DEVICE  Serial
+        #endif
+        #define DBG(msg, ...)      TOOLS_DEBUG_DEVICE.printf("%s.%s: " msg "\n", __FILE__, __FUNCTION__, ##__VA_ARGS__)
+        #define INFO(msg, ...)	   TOOLS_DEBUG_DEVICE.printf("%s: " msg "\n", __FUNCTION__, ##__VA_ARGS__)
+        #define WARNING(msg, ...)  TOOLS_DEBUG_DEVICE.printf("WARN :" __FILE__ ".%s(" __LINESTR__ "): " msg "\n", __FUNCTION__, ##__VA_ARGS__)
+        #define ERROR(msg, ...)    TOOLS_DEBUG_DEVICE.printf("ERROR:" __FILE__ ".%s(" __LINESTR__ "): " msg "\n", __FUNCTION__, ##__VA_ARGS__)
     #endif // ARDUINO
 #else
     #define DBG(msg, ...)
