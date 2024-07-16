@@ -10,9 +10,6 @@ const char* dbg_ptr_lookup(void* ptr);
 	#define DBG_PTR_REGISTER(ptr, name)		dbg_ptr_register(ptr, name)
 	#define DBG_PTR_NAME(ptr)				dbg_ptr_lookup(ptr)
 
-#else
-	#define DBG_PTR_REGISTER(ptr, name)		
-	#define DBG)PTR_NAME(ptr)
 #endif
 
 #endif // __TOOLS_PTRDBG_H
