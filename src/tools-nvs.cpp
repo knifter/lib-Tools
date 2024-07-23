@@ -90,6 +90,11 @@ void NVSettings::saveDelayed(time_t later)
 	DBG("%lu: Will save settings at %lu", millis(), when);
 };
 
+bool NVSettings::isDirty()
+{
+	return _dirty;
+};
+
 bool NVSettings::write_flash(bool testmode)
 {
 	nvs_metadata_t meta;

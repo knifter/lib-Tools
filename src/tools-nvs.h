@@ -24,6 +24,7 @@ class NVSettings
 		void save();
 		bool erase();
 		void saveDelayed(time_t when = NVS_DELAY_SAVE);
+		bool isDirty();			// is a saveDelayed pending?
 		void setDefaults();
 		
 	protected:
