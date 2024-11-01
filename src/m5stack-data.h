@@ -1,5 +1,11 @@
-#define M5STACK_CORE
-#define M5STACK_CORE2
+// From github.com/knifter/lib-tools, version/date 3-10-2024
+
+#ifdef ARDUINO_M5STACK_CORE
+    #define M5STACK_CORE
+#endif
+#ifdef ARDUINO_M5STACK_CORE2
+     #define M5STACK_CORE2
+#endif
 #ifdef ARDUINO_M5STACK_CORES3
     #define M5STACK_CORES3
 #endif
@@ -281,7 +287,7 @@
     #define M5_USB_DN               GPIO_NUM_19
     #define M5_USB_DP               GPIO_NUM_20
     
-    // Internal LCD
+    // Internal LCD: ILI9341
     #define M5_LCD_CS               GPIO_NUM_3
     #define M5_LCD_DC               GPIO_NUM_35
     // #define M5_LCD_BL               AXP2101_DLDO1
@@ -314,7 +320,7 @@
     // Internal: Touch FT6336U
     #define M5_TOUCH_SCL            M5_BUS_INT_SCL
     #define M5_TOUCH_SDA            M5_BUS_INT_SDA
-    // #define M5_TOUCH_INT            AW9523B_P1_2
+    #define M5_TOUCH_INT            GPIO_NUM_21 // via AW9523B_P1_2
     // #define M5_TOUCH_RST            AW9523B_P0_0
 
     // Internal: SD/TF
@@ -355,7 +361,7 @@
     #define M5_PORTC_1              M5_BUS_PC_RX
     #define M5_PORTC_2              M5_BUS_PC_TX
 
-    // I2C Addresses
+    // I2C Addresses: INT_I2C G11/G12
     #define M5_I2C_ADDR_GC0308      (0x21) // Camera
     #define M5_I2C_ADDR_LTR553      (0x23) // Light Sensor
     #define M5_I2C_ADDR_AXP2101     (0x34) // Power mgmt
@@ -364,16 +370,17 @@
     #define M5_I2C_ADDR_ES7210      (0x40) // MIC ADC
     #define M5_I2C_ADDR_BM8563      (0x51) // RTC
     #define M5_I2C_ADDR_AW9523      (0x58) // IO-Expander
+    // #define M5_I2C_ADDR_MPU6886     (0x68) // IMU
     #define M5_I2C_ADDR_BMI270      (0x69) // IMU
     #define M5_I2C_ADDR_BMM150      (0x10) // Magneto
-#endif // ARDUINO_M5CORE_CORES3
+#endif // M5STACK_CORES3
 
 // STEPMOTOR DRIVER V1.1 pins on MBUS
-#define M5_STEPMOTORDRIVER_DIR_X    M5_BUS_15   // S1:GPIO17 S2:GPIO14 S3:GPIO17 
-#define M5_STEPMOTORDRIVER_STP_X    M5_BUS_16   // S1:GPIO16 S2:GPIO13 S3:GPIO18 
-#define M5_STEPMOTORDRIVER_DIR_Y    M5_BUS_21   // S1:GPIO13 S2:GPIO19 S3:GPIO7 
-#define M5_STEPMOTORDRIVER_STP_Y    M5_BUS_22   // S1:GPIO12 S2:GPIO27 S3:GPIO6
-#define M5_STEPMOTORDRIVER_DIR_Z    M5_BUS_23   // S1:GPIO0  S2:GPIO0  S3:GPIO0
-#define M5_STEPMOTORDRIVER_STP_Z    M5_BUS_24   // S1:GPIO15 S2:GPIO2  S3:GPIO13
-#define M5_STEPMOTORDRIVER_SDA      M5_BUS_18   // S1:GPIO21 S2:GPIO   S3:GPIO11
-#define M5_STEPMOTORDRIVER_SCL      M5_BUS_17   // S1:GPIO22 S2:GPIO   S3:GPIO12
+#define M5_STEPMOTORDRIVER_DIR_X    M5_BUS_16   // S1:GPIO17 S2:GPIO14 S3:GPIO17 
+#define M5_STEPMOTORDRIVER_STP_X    M5_BUS_15   // S1:GPIO16 S2:GPIO13 S3:GPIO16 
+#define M5_STEPMOTORDRIVER_DIR_Y    M5_BUS_22   // S1:GPIO13 S2:GPIO19 S3:GPIO7 
+#define M5_STEPMOTORDRIVER_STP_Y    M5_BUS_21   // S1:GPIO12 S2:GPIO27 S3:GPIO6
+#define M5_STEPMOTORDRIVER_DIR_Z    M5_BUS_24   // S1:GPIO0  S2:GPIO0  S3:GPIO0
+#define M5_STEPMOTORDRIVER_STP_Z    M5_BUS_23   // S1:GPIO15 S2:GPIO2  S3:GPIO13
+#define M5_STEPMOTORDRIVER_SDA      M5_BUS_17   // S1:GPIO21 S2:GPIO   S3:GPIO12
+#define M5_STEPMOTORDRIVER_SCL      M5_BUS_18   // S1:GPIO22 S2:GPIO   S3:GPIO11
