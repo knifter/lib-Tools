@@ -1,3 +1,6 @@
+#ifdef AUTOSAMPLER_NO_NVS
+// We have to disable this file because AutoSampler runs on ESP 3.0.0
+
 #include "tools-remoterx.h"
 
 #include "config.h"
@@ -225,3 +228,4 @@ void RemoteRx::debugPacket(const rmt_item32_t* item, const size_t length)
 };
 #endif
 
+#endif

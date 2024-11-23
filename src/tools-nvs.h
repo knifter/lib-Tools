@@ -1,3 +1,6 @@
+#ifdef AUTOSAMPLER_NO_NVS
+// We have to disable this file because AutoSampler runs on ESP 3.0.0
+
 #ifndef __TOOLS_NVS_H
 #define __TOOLS_NVS_H
 
@@ -45,3 +48,5 @@ class NVSettings
 };
 
 #endif // __TOOLS_NVS_H
+
+#endif

@@ -1,3 +1,6 @@
+#ifdef AUTOSAMPLER_NO_NVS
+// We have to disable this file because AutoSampler runs on ESP 3.0.0
+
 #include "tools-nvs.h"
 
 // #include <Arduino.h>
@@ -203,3 +206,6 @@ bool NVSettings::erase()
 	INFO("NVM Settings erased.");
 	return true;
 };
+
+
+#endif
