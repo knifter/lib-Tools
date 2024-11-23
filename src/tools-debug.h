@@ -6,9 +6,10 @@
 bool 		dbg_ptr_register(void* ptr, const char* name);
 const char* dbg_ptr_lookup(void* ptr);
 
+#define DBG_PTR_REGISTER(ptr, name)		dbg_ptr_register(ptr, name)
+#define DBG_PTR_NAME(ptr)				dbg_ptr_lookup(ptr)
 
-	#define DBG_PTR_REGISTER(ptr, name)		dbg_ptr_register(ptr, name)
-	#define DBG_PTR_NAME(ptr)				dbg_ptr_lookup(ptr)
+const char *hexdump(void *data, size_t len);
 
 #endif
 
