@@ -1,3 +1,5 @@
+#ifndef __TOOLS_REMOTERX
+#define __TOOLS_REMOTERX
 
 #include "driver/rmt.h"
 
@@ -13,3 +15,5 @@ class RemoteRx
 		
 		RingbufHandle_t _rb = NULL;
 };
+
+#endif // __TOOLS_REMOTERX
