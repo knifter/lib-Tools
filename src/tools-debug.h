@@ -3,6 +3,8 @@
 
 #ifdef DEBUG
 
+#include <stddef.h>
+
 bool 		dbg_ptr_register(void* ptr, const char* name);
 const char* dbg_ptr_lookup(void* ptr);
 

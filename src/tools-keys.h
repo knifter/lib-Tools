@@ -8,14 +8,28 @@
 #define KEYTOOL_LONG            ((uint32_t)(0x20000000))
 #define KEYTOOL_LONG_REPEAT     ((uint32_t)(0x40000000))
 #define KEYTOOL_RELEASED        ((uint32_t)(0x80000000))
+
 #define KEYTOOL_SHORT_RELEASED  (KEYTOOL_SHORT | KEYTOOL_RELEASED)
+
+#ifndef KEYTOOL_NO_DOUBLE
+    #define KEYTOOL_DOUBLE ((uint32_t)(0x08000000))
+    #define KEYTOOL_DOUBLE_RELEASED  (KEYTOOL_DOUBLE | KEYTOOL_RELEASED)
+#endif
+
 #define KEYTOOL_LONG_RELEASED   (KEYTOOL_LONG | KEYTOOL_RELEASED) 
-#define KEYTOOL_EVENT_MASK      ((uint32_t)(0xF0000000))
+#ifndef KEYTOOL_NO_DOUBLE
+    #define KEYTOOL_EVENT_MASK      ((uint32_t)(0xFF000000))
+#else
+    #define KEYTOOL_EVENT_MASK      ((uint32_t)(0xF0000000))
+#endif
 #define KEYTOOL_KEYS_MASK       (~KEYTOOL_EVENT_MASK)   
 
 // If not defined, use these defaults:
 #ifndef KEYTOOL_SHORT_MS
     #define KEYTOOL_SHORT_MS       50
+#endif
+#ifndef KEYTOOL_DOUBLE_MS
+    #define KEYTOOL_DOUBLE_MS      400
 #endif
 #ifndef KEYTOOL_LONG_MS
     #define KEYTOOL_LONG_MS        800
