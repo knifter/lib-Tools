@@ -4,6 +4,7 @@
 #include <nvs.h>
 
 #include "config.h"
+#include "version.h"
 #include "tools-log.h"
 
 typedef struct
