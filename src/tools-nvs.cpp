@@ -99,7 +99,7 @@ bool NVSettings::isDirty()
 bool NVSettings::write_flash(bool testmode)
 {
 	nvs_metadata_t meta;
-    meta.app_version = VERSION;
+    meta.app_version = VERSION_NUMBER;
     meta.data_version = _data_version;
     meta.data_size = _data_size;
 
