@@ -157,3 +157,6 @@ And another example of how events can be used (for some rudimentary acceleration
       val_prv = val;
   };
 ```
+
+## Author
+This software is written by [Tijs van Roon](https://github.com/knifter). It is free to use under the [MIT License](https://opensource.org/licenses/MIT).

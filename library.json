@@ -1,4 +1,23 @@
 {
   "name": "lib-tools",
-  "version": "0.1.0+20260420"
+  "version": "1.0.0+20260423",
+  "description": "Common C++ utilities for ESP32 Arduino projects: key debounce/event detection, NVS storage, IR remote receiver, logging helpers, and NonCopyable base.",
+  "keywords": ["esp32", "arduino", "keys", "debounce", "nvs", "ir", "remote", "logging", "utilities"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/knifter/lib-tools"
+  },
+  "authors": {
+    "name": "Tijs van Roon",
+    "url": "https://github.com/knifter",
+    "maintainer": true
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/knifter/lib-tools",
+  "frameworks": "arduino",
+  "platforms": "espressif32",
+  "build": {
+    "srcDir": "src",
+    "includeDir": "src"
+  }
 }
