@@ -1,3 +1,6 @@
+#include "esp_idf_version.h"
+#if ESP_IDF_VERSION_MAJOR < 5
+
 #include "tools-remoterx.h"
 
 #include "config.h"
@@ -63,7 +66,7 @@ bool RemoteRx::setup(gpio_num_t pin)
 		.filter_ticks_thresh = (uint16_t) _RMT_FILTER_US / _RMT_US_PER_TICK, // must not exceed 255
 		.filter_en = true,
 	};
-	rmt_config_t rmtcfg = 
+	rmt_config_t rmtcfg =
 	{
 		.rmt_mode = RMT_MODE_RX,
 		.channel = RMT_CHANNEL_0,
@@ -225,3 +228,4 @@ void RemoteRx::debugPacket(const rmt_item32_t* item, const size_t length)
 };
 #endif
 
+#endif // ESP_IDF_VERSION_MAJOR < 5
