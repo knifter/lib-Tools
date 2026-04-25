@@ -199,8 +199,6 @@ void RemoteRx::debugPacket(const rmt_symbol_word_t* item, const size_t length)
         long_min, long_max, long_avg, long_perc,
         sum/length, max(short_perc, long_perc));
 }
-#else
-void RemoteRx::debugPacket(const rmt_symbol_word_t*, size_t) {}
 #endif
 
 #endif // ESP_IDF_VERSION_MAJOR >= 5
