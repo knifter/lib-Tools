@@ -1,6 +1,5 @@
 #include "tools-nvs.h"
 
-// #include <Arduino.h>
 #include <nvs.h>
 
 #include "config.h"
@@ -88,7 +87,7 @@ void NVSettings::saveDelayed(time_t later)
 	if(when > _saveat)
 		_saveat = when;
 	_dirty = true;
-	DBG("%lu: Will save settings at %lu", millis(), when);
+	DBG("%lu: Will save settings at %llu", millis(), when);
 };
 
 bool NVSettings::isDirty()
@@ -105,7 +104,7 @@ bool NVSettings::write_flash(bool testmode)
 
 	if(testmode)
 	{
-		DBG("write_flash testmode: app_vesion: %d, data_version: %d, data_size: %d", meta.app_version, meta.data_version, meta.data_size);
+		DBG("write_flash testmode: app_version: %lu, data_version: %lu, data_size: %lu", meta.app_version, meta.data_version, meta.data_size);
 		_dirty = false;
 		return true;
 	};
@@ -156,7 +155,7 @@ bool NVSettings::read_flash()
         return false;
     };
 
-    DBG("NVSettings meta-data found. app_version: %d, data_version: %d, %d bytes", meta.app_version, meta.data_version, meta.data_size);
+    DBG("NVSettings meta-data found. app_version: %lu, data_version: %lu, %lu bytes", meta.app_version, meta.data_version, meta.data_size);
 
     // Now we know the data blob is equal or smaller than _data_size and we can load it
     blobsize = meta.data_size;

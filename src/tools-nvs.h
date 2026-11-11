@@ -2,6 +2,7 @@
 #define __TOOLS_NVS_H
 
 #include <stdint.h>
+#include <ctime>
 #include <nvs.h>
 
 #include "config.h"
