@@ -37,12 +37,12 @@ class singleton
             return instance;
         };
 
-        DELETE_ASSIGNMENT_OPERATOR(noncopyable);
-        DELETE_COPY_CONSTRUCTOR(noncopyable);
+        DELETE_ASSIGNMENT_OPERATOR(singleton);
+        DELETE_COPY_CONSTRUCTOR(singleton);
 
         // These two are implicit anyway(!)
-        DELETE_MOVE_ASSIGNMENT_OPERATOR(noncopyable);
-        DELETE_MOVE_CONSTRUCTOR(noncopyable);
+        DELETE_MOVE_ASSIGNMENT_OPERATOR(singleton);
+        DELETE_MOVE_CONSTRUCTOR(singleton);
 
     protected:
         singleton() = default;          // hide the default constructor
