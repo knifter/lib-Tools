@@ -1,6 +1,6 @@
 #ifdef TOOLS_REMOTERX_LEGACY
 
-#include "tools-remoterx.h"
+#include "tools-remoterx-legacy.h"
 
 #include "config.h"
 
